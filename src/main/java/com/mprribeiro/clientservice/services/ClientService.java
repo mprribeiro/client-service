@@ -4,6 +4,7 @@ import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,7 @@ public class ClientService {
 	public void delete(Long id) {
 		try {
 			clientRepository.deleteById(id);
-		} catch (EntityNotFoundException e) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Entity not found for id " + id);
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseIntegrityException("Id " + id + " is associated to other entity");
